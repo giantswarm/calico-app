@@ -1,0 +1,5 @@
+name: calico
+
+project:
+  branch: "[[ .Branch ]]"
+  commit: "[[ .SHA ]]"
