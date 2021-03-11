@@ -11,5 +11,5 @@ image:
     tag: v3.18.0
   node:
     tag: v3.18.0
-  kube-controllers:
+  kube_controllers:
     tag: v3.18.0
