@@ -10,7 +10,7 @@ workflows:
           name: push-to-default-app-catalog
           app_catalog: "default-catalog"
           app_catalog_test: "default-test-catalog"
-          chart: "calico-app"
+          chart: "calico"
           context: "architect"
           filters:
             # Trigger the job also on git tag.
@@ -21,7 +21,7 @@ workflows:
           name: push-to-giantswarm-app-catalog
           app_catalog: "giantswarm-catalog"
           app_catalog_test: "giantswarm-test-catalog"
-          chart: "calico-app"
+          chart: "calico"
           context: "architect"
           filters:
             # Trigger the job also on git tag.
