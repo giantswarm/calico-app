@@ -5,4 +5,4 @@ name: calico
 sources:
 - https://github.com/projectcalico/calico
 version: [[ .Version ]]
-appVersion: [[ .AppVersion ]]
+appVersion: "3.18.0"
