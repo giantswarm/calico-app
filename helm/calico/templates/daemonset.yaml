@@ -5,14 +5,16 @@
 kind: DaemonSet
 apiVersion: apps/v1
 metadata:
-  name: calico-node
-  namespace: kube-system
+  name: {{ include "resource.default.name" . }}-node
+  namespace: {{ include "resource.default.namespace" . }}
   labels:
-    k8s-app: calico-node
+    {{- include "labels.common" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "resource.default.name" . }}-node
 spec:
   selector:
     matchLabels:
-      k8s-app: calico-node
+      {{- include "labels.selector" . | nindent 6 }}
+      app.kubernetes.io/component: {{ include "resource.default.name" . }}-node
   updateStrategy:
     type: RollingUpdate
     rollingUpdate:
@@ -20,7 +22,8 @@ spec:
   template:
     metadata:
       labels:
-        k8s-app: calico-node
+        {{- include "labels.common" . | nindent 8 }}
+        app.kubernetes.io/component: {{ include "resource.default.name" . }}-node
     spec:
       nodeSelector:
         kubernetes.io/os: linux
@@ -34,7 +37,7 @@ spec:
           operator: Exists
         - effect: NoExecute
           operator: Exists
-      serviceAccountName: calico-node
+      serviceAccountName: {{ include "resource.default.name" . }}-node
       # Minimize downtime during a rolling upgrade or deletion; tell Kubernetes to do a "force
       # deletion": https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods.
       terminationGracePeriodSeconds: 0
@@ -59,7 +62,7 @@ spec:
             - name: CALICO_NETWORKING_BACKEND
               valueFrom:
                 configMapKeyRef:
-                  name: calico-config
+                  name: {{ include "resource.default.name" . }}-config
                   key: calico_backend
           volumeMounts:
             - mountPath: /var/lib/cni/networks
@@ -86,7 +89,7 @@ spec:
             - name: CNI_NETWORK_CONFIG
               valueFrom:
                 configMapKeyRef:
-                  name: calico-config
+                  name: {{ include "resource.default.name" . }}-config
                   key: cni_network_config
             # Set the hostname based on the k8s node name.
             - name: KUBERNETES_NODE_NAME
@@ -97,7 +100,7 @@ spec:
             - name: CNI_MTU
               valueFrom:
                 configMapKeyRef:
-                  name: calico-config
+                  name: {{ include "resource.default.name" . }}-config
                   key: veth_mtu
             # Prevents the container from sleeping forever.
             - name: SLEEP
@@ -145,7 +148,7 @@ spec:
             - name: CALICO_NETWORKING_BACKEND
               valueFrom:
                 configMapKeyRef:
-                  name: calico-config
+                  name: {{ include "resource.default.name" . }}-config
                   key: calico_backend
             # Cluster type to identify the deployment type
             - name: CLUSTER_TYPE
@@ -163,19 +166,19 @@ spec:
             - name: FELIX_IPINIPMTU
               valueFrom:
                 configMapKeyRef:
-                  name: calico-config
+                  name: {{ include "resource.default.name" . }}-config
                   key: veth_mtu
             # Set MTU for the VXLAN tunnel device.
             - name: FELIX_VXLANMTU
               valueFrom:
                 configMapKeyRef:
-                  name: calico-config
+                  name: {{ include "resource.default.name" . }}-config
                   key: veth_mtu
             # Set MTU for the Wireguard tunnel device.
             - name: FELIX_WIREGUARDMTU
               valueFrom:
                 configMapKeyRef:
-                  name: calico-config
+                  name: {{ include "resource.default.name" . }}-config
                   key: veth_mtu
             # The default IPv4 pool to create on startup if none exists. Pod IPs will be
             # chosen from this range. Changing this value after installation will have

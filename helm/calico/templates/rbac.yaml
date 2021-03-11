@@ -5,7 +5,7 @@
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: calico-kube-controllers
+  name: {{ include "resource.default.name" . }}-kube-controllers
 rules:
   # Nodes are watched to monitor for deletions.
   - apiGroups: [""]
@@ -74,15 +74,15 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: calico-kube-controllers
+  name: {{ include "resource.default.name" . }}-kube-controllers
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: calico-kube-controllers
+  name: {{ include "resource.default.name" . }}-kube-controllers
 subjects:
 - kind: ServiceAccount
-  name: calico-kube-controllers
-  namespace: kube-system
+  name: {{ include "resource.default.name" . }}-kube-controllers
+  namespace: {{ include "resource.default.namespace" . }}
 ---
 # Source: calico/templates/calico-node-rbac.yaml
 # Include a clusterrole for the calico-node DaemonSet,
@@ -90,7 +90,7 @@ subjects:
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: calico-node
+  name: {{ include "resource.default.name" . }}-node
 rules:
   # The CNI plugin needs to get pods, nodes, and namespaces.
   - apiGroups: [""]
@@ -227,12 +227,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: calico-node
+  name: {{ include "resource.default.name" . }}-node
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: calico-node
+  name: {{ include "resource.default.name" . }}-node
 subjects:
 - kind: ServiceAccount
-  name: calico-node
-  namespace: kube-system
+  name: {{ include "resource.default.name" . }}-node
+  namespace: {{ include "resource.default.namespace" . }}

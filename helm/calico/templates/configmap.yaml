@@ -3,8 +3,10 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: calico-config
-  namespace: kube-system
+  name: {{ include "resource.default.name" . }}-config
+  namespace: {{ include "resource.default.namespace" . }}
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
 data:
   # Typha is disabled.
   typha_service_name: "none"
