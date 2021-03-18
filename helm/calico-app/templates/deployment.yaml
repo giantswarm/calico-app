@@ -1,0 +1,51 @@
+# Source: calico/templates/calico-kube-controllers.yaml
+# See https://github.com/projectcalico/kube-controllers
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "resource.default.name" . }}-kube-controllers
+  namespace: {{ include "resource.default.namespace" . }}
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "resource.default.name" . }}-kube-controllers
+spec:
+  # The controllers can only have a single active instance.
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "labels.selector" . | nindent 6 }}
+      app.kubernetes.io/component: {{ include "resource.default.name" . }}-kube-controllers
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      name: {{ include "resource.default.name" . }}-kube-controllers
+      namespace: {{ include "resource.default.namespace" . }}
+      labels:
+        {{- include "labels.common" . | nindent 8 }}
+        app.kubernetes.io/component: {{ include "resource.default.name" . }}-kube-controllers
+    spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+      tolerations:
+        # Mark the pod as a critical add-on for rescheduling.
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
+      serviceAccountName: {{ include "resource.default.name" . }}-kube-controllers
+      priorityClassName: system-cluster-critical
+      containers:
+        - name: calico-kube-controllers
+          image: docker.io/calico/kube-controllers:{{ .Values.image.kube_controllers.tag }}
+          env:
+            # Choose which controllers to run.
+            - name: ENABLED_CONTROLLERS
+              value: node
+            - name: DATASTORE_TYPE
+              value: kubernetes
+          readinessProbe:
+            exec:
+              command:
+              - /usr/bin/check-status
+              - -r

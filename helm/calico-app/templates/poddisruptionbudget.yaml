@@ -1,0 +1,16 @@
+# This manifest creates a Pod Disruption Budget for Controller to allow K8s Cluster Autoscaler to evict
+
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "resource.default.name" . }}-kube-controllers
+  namespace: {{ include "resource.default.namespace" . }}
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "resource.default.name" . }}-kube-controllers
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      {{- include "labels.selector" . | nindent 6 }}
+      app.kubernetes.io/component: {{ include "resource.default.name" . }}-kube-controllers

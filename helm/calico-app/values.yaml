@@ -1,0 +1,15 @@
+name: calico
+
+project:
+  branch: "[[ .Branch ]]"
+  commit: "[[ .SHA ]]"
+
+image:
+  cni:
+    tag: v3.18.0
+  flexvol:
+    tag: v3.18.0
+  node:
+    tag: v3.18.0
+  kube_controllers:
+    tag: v3.18.0
