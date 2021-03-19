@@ -217,7 +217,9 @@ spec:
               command:
               - /bin/calico-node
               - -felix-live
+              {{- if ne .Values.provider "azure" }}
               - -bird-live
+              {{- end }}
             periodSeconds: 10
             initialDelaySeconds: 10
             failureThreshold: 6
@@ -226,7 +228,9 @@ spec:
               command:
               - /bin/calico-node
               - -felix-ready
+              {{- if ne .Values.provider "azure" }}
               - -bird-ready
+              {{- end }}
             periodSeconds: 10
           volumeMounts:
             - mountPath: /lib/modules
