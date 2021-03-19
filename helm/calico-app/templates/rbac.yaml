@@ -101,6 +101,7 @@ rules:
     verbs:
       - get
   {{- if eq .Values.provider "azure" }}
+  # Needed when configuring bgp password in bgppeer
   - apiGroups: [""]
     resources:
       - secrets
