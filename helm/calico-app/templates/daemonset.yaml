@@ -156,12 +156,20 @@ spec:
             # Auto-detect the BGP IP address.
             - name: IP
               value: "autodetect"
+            {{- if ne .Values.provider "azure" }}
             # Enable IPIP
             - name: CALICO_IPV4POOL_IPIP
               value: "Always"
+            {{- end }}
+            {{- if ne .Values.provider "azure" }}
             # Enable or Disable VXLAN on the default IP pool.
             - name: CALICO_IPV4POOL_VXLAN
               value: "Never"
+            {{- else }}
+            # Enable or Disable VXLAN on the default IP pool.
+            - name: CALICO_IPV4POOL_VXLAN
+              value: "Always"
+            {{- end }}
             # Set MTU for tunnel device used if ipip is enabled
             - name: FELIX_IPINIPMTU
               valueFrom:
