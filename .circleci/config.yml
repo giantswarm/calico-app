@@ -18,7 +18,7 @@ workflows:
               only: /^v.*/
 
       - architect/push-to-app-catalog:
-          name: push-to-giantswarm-app-catalog
+          name: push-to-giantswarm-playground-app-catalog
           app_catalog: "giantswarm-playground-catalog"
           app_catalog_test: "giantswarm-playground-test-catalog"
           chart: "calico-app"
