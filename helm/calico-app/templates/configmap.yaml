@@ -11,7 +11,11 @@ data:
   # Typha is disabled.
   typha_service_name: "none"
   # Configure the backend to use.
+  {{- if eq .Values.provider "azure" }}
+  calico_backend: "vxlan"
+  {{- else }}
   calico_backend: "bird"
+  {{- end }}
 
   # Configure the MTU to use for workload interfaces and tunnels.
   # By default, MTU is auto-detected, and explicitly setting this field should not be required.

@@ -156,12 +156,20 @@ spec:
             # Auto-detect the BGP IP address.
             - name: IP
               value: "autodetect"
+            {{- if ne .Values.provider "azure" }}
             # Enable IPIP
             - name: CALICO_IPV4POOL_IPIP
               value: "Always"
+            {{- end }}
+            {{- if ne .Values.provider "azure" }}
             # Enable or Disable VXLAN on the default IP pool.
             - name: CALICO_IPV4POOL_VXLAN
               value: "Never"
+            {{- else }}
+            # Enable or Disable VXLAN on the default IP pool.
+            - name: CALICO_IPV4POOL_VXLAN
+              value: "Always"
+            {{- end }}
             # Set MTU for tunnel device used if ipip is enabled
             - name: FELIX_IPINIPMTU
               valueFrom:
@@ -209,7 +217,9 @@ spec:
               command:
               - /bin/calico-node
               - -felix-live
+              {{- if ne .Values.provider "azure" }}
               - -bird-live
+              {{- end }}
             periodSeconds: 10
             initialDelaySeconds: 10
             failureThreshold: 6
@@ -218,7 +228,9 @@ spec:
               command:
               - /bin/calico-node
               - -felix-ready
+              {{- if ne .Values.provider "azure" }}
               - -bird-ready
+              {{- end }}
             periodSeconds: 10
           volumeMounts:
             - mountPath: /lib/modules
