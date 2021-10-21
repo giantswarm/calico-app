@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.1] - 2021-10-21
 
+- Add icon
+
 ## [0.2.0] - 2021-03-22
 
 ## [0.1.0] - 2021-03-18
