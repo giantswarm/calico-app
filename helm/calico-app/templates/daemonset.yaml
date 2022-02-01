@@ -176,6 +176,9 @@ spec:
                 configMapKeyRef:
                   name: {{ include "resource.default.name" . }}-config
                   key: veth_mtu
+            # Set to true to enable the Prometheus metrics server in Felix.
+            - name: FELIX_PROMETHEUSMETRICSENABLED
+              value: "true"
             # Set MTU for the VXLAN tunnel device.
             - name: FELIX_VXLANMTU
               valueFrom:

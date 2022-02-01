@@ -6,10 +6,10 @@ project:
 
 image:
   cni:
-    tag: v3.21.0
+    tag: v3.22.0
   flexvol:
-    tag: v3.21.0
+    tag: v3.22.0
   node:
-    tag: v3.21.0
+    tag: v3.22.0
   kube_controllers:
-    tag: v3.21.0
+    tag: v3.22.0

@@ -5,5 +5,5 @@ name: calico
 sources:
 - https://github.com/projectcalico/calico
 version: [[ .Version ]]
-appVersion: "3.21.0"
+appVersion: "3.22.0"
 icon: https://s.giantswarm.io/app-icons/project-calico/1/light.svg

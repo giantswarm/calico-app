@@ -9,7 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Changed
 
-- Upgrade to calico v3.21.0
+- Upgrade to calico v3.22.0.
+
+## [0.2.1] - 2022-01-28
+
+### Added
+
+- Enable Felix metrics.
 
 ## [0.2.1] - 2021-10-21
 
@@ -20,7 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2021-03-18
 
 
-[Unreleased]: https://github.com/giantswarm/calico-app/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/giantswarm/giantswarm/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/giantswarm/giantswarm/compare/v0.2.1...v0.2.1
 [0.2.1]: https://github.com/giantswarm/calico-app/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/giantswarm/calico-app/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/giantswarm/calico-app/compare/v0.0.0...v0.1.0
