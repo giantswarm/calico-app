@@ -33,6 +33,8 @@ spec:
           operator: Exists
         - key: node-role.kubernetes.io/master
           effect: NoSchedule
+        - key: node-role.kubernetes.io/control-plane
+          effect: NoSchedule
       serviceAccountName: {{ include "resource.default.name" . }}-kube-controllers
       priorityClassName: system-cluster-critical
       containers:
